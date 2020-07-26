@@ -140,7 +140,6 @@ align = 1
 valign = 1
 
 [node name="TouchReload" type="TouchScreenButton" parent="WonContainer/VBoxContainer/Click"]
-visible = false
 self_modulate = Color( 0, 0.858824, 1, 1 )
 position = Vector2( 76.97, 31.4421 )
 scale = Vector2( 2, 2 )
