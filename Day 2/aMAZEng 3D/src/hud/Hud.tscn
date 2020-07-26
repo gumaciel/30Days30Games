@@ -1,0 +1,163 @@
+[gd_scene load_steps=12 format=2]
+
+[ext_resource path="res://assets/touch/arrowRight.png" type="Texture" id=1]
+[ext_resource path="res://assets/touch/arrowUp.png" type="Texture" id=2]
+[ext_resource path="res://assets/touch/arrowDown.png" type="Texture" id=3]
+[ext_resource path="res://assets/touch/arrowLeft.png" type="Texture" id=4]
+[ext_resource path="res://assets/touch/buttonA.png" type="Texture" id=5]
+[ext_resource path="res://assets/touch/buttonB.png" type="Texture" id=6]
+[ext_resource path="res://assets/fonts/Monster Mech.ttf" type="DynamicFontData" id=7]
+[ext_resource path="res://assets/touch/rewind.png" type="Texture" id=8]
+
+[sub_resource type="DynamicFont" id=1]
+size = 24
+font_data = ExtResource( 7 )
+
+[sub_resource type="Animation" id=2]
+resource_name = "load"
+length = 0.001
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:visible")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ false ]
+}
+
+[sub_resource type="Animation" id=3]
+loop = true
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.5 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Color( 1, 1, 1, 1 ), Color( 0, 1, 0.203922, 1 ) ]
+}
+
+[node name="Hud" type="Control"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+__meta__ = {
+"_edit_use_anchors_": true
+}
+
+[node name="Controls" type="Node2D" parent="."]
+position = Vector2( 190, 378 )
+scale = Vector2( 2, 2 )
+
+[node name="Right" type="TouchScreenButton" parent="Controls"]
+position = Vector2( 48, 0 )
+normal = ExtResource( 1 )
+passby_press = true
+action = "ui_right"
+visibility_mode = 1
+
+[node name="Left" type="TouchScreenButton" parent="Controls"]
+position = Vector2( -48, 0 )
+normal = ExtResource( 4 )
+passby_press = true
+action = "ui_left"
+visibility_mode = 1
+
+[node name="Up" type="TouchScreenButton" parent="Controls"]
+position = Vector2( 0, -48 )
+normal = ExtResource( 2 )
+passby_press = true
+action = "ui_up"
+visibility_mode = 1
+
+[node name="Down" type="TouchScreenButton" parent="Controls"]
+position = Vector2( 0, 48 )
+normal = ExtResource( 3 )
+passby_press = true
+action = "ui_down"
+visibility_mode = 1
+
+[node name="Camera" type="Node2D" parent="."]
+scale = Vector2( 2, 2 )
+
+[node name="RotateLeft" type="TouchScreenButton" parent="Camera"]
+position = Vector2( 344.08, 190.093 )
+normal = ExtResource( 5 )
+action = "rotate_left"
+
+[node name="RotateRight" type="TouchScreenButton" parent="Camera"]
+position = Vector2( 424.08, 190.093 )
+normal = ExtResource( 6 )
+action = "rotate_right"
+
+[node name="WonContainer" type="CenterContainer" parent="."]
+visible = false
+anchor_right = 1.0
+margin_bottom = 68.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="VBoxContainer" type="VBoxContainer" parent="WonContainer"]
+margin_left = 385.0
+margin_right = 638.0
+margin_bottom = 68.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="WonLabel" type="Label" parent="WonContainer/VBoxContainer"]
+margin_right = 253.0
+margin_bottom = 32.0
+custom_fonts/font = SubResource( 1 )
+text = "YOU WON!"
+align = 1
+valign = 1
+
+[node name="TimeLabel" type="Label" parent="WonContainer/VBoxContainer"]
+margin_top = 36.0
+margin_right = 253.0
+margin_bottom = 68.0
+custom_fonts/font = SubResource( 1 )
+text = "Your Time: 123123131"
+align = 1
+valign = 1
+
+[node name="Click" type="Label" parent="WonContainer/VBoxContainer"]
+visible = false
+margin_top = 72.0
+margin_right = 253.0
+margin_bottom = 104.0
+custom_fonts/font = SubResource( 1 )
+text = "Click to reload"
+align = 1
+valign = 1
+
+[node name="TouchReload" type="TouchScreenButton" parent="WonContainer/VBoxContainer/Click"]
+visible = false
+self_modulate = Color( 0, 0.858824, 1, 1 )
+position = Vector2( 76.97, 31.4421 )
+scale = Vector2( 2, 2 )
+normal = ExtResource( 8 )
+action = "restart"
+
+[node name="Press" type="Label" parent="WonContainer/VBoxContainer"]
+visible = false
+margin_top = 72.0
+margin_right = 253.0
+margin_bottom = 104.0
+custom_fonts/font = SubResource( 1 )
+text = "Press 'R' to reload"
+align = 1
+valign = 1
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="WonContainer"]
+autoplay = "load"
+anims/load = SubResource( 2 )
+anims/won = SubResource( 3 )
