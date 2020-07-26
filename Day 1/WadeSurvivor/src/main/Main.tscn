@@ -1,0 +1,61 @@
+[gd_scene load_steps=7 format=2]
+
+[ext_resource path="res://assets/GUI/mainmenu.png" type="Texture" id=1]
+[ext_resource path="res://src/main/Main.gd" type="Script" id=2]
+[ext_resource path="res://src/util/TranslateScene.tscn" type="PackedScene" id=3]
+[ext_resource path="res://assets/touch/buttonStart.png" type="Texture" id=4]
+
+[sub_resource type="Animation" id=1]
+resource_name = "change_scene"
+tracks/0/type = "value"
+tracks/0/path = NodePath("Screen:self_modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 1 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Color( 1, 1, 1, 1 ), Color( 0, 0, 0, 1 ) ]
+}
+
+[sub_resource type="Animation" id=2]
+resource_name = "instanced"
+step = 0.034
+tracks/0/type = "value"
+tracks/0/path = NodePath("Screen:self_modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.986 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Color( 0, 0, 0, 1 ), Color( 1, 1, 1, 1 ) ]
+}
+
+[node name="Main" type="Node2D"]
+z_index = 5
+script = ExtResource( 2 )
+
+[node name="Screen" type="TextureRect" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+texture = ExtResource( 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="TranslateScene" parent="." instance=ExtResource( 3 )]
+anims/change_scene = SubResource( 1 )
+anims/instanced = SubResource( 2 )
+
+[node name="TouchScreenButton" type="TouchScreenButton" parent="."]
+position = Vector2( 519.333, 409.813 )
+scale = Vector2( 3, 3 )
+normal = ExtResource( 4 )
+action = "enter"
+visibility_mode = 1
+[connection signal="animation_finished" from="TranslateScene" to="." method="_on_TranslateScene_animation_finished"]

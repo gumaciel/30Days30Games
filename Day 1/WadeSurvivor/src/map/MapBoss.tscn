@@ -1,0 +1,70 @@
+[gd_scene load_steps=11 format=2]
+
+[ext_resource path="res://src/map/Map.tscn" type="PackedScene" id=1]
+[ext_resource path="res://src/enemy/Boss.tscn" type="PackedScene" id=2]
+[ext_resource path="res://assets/maps/X.png" type="Texture" id=3]
+[ext_resource path="res://src/map/Gate.tscn" type="PackedScene" id=4]
+[ext_resource path="res://src/enemy/Boss.gd" type="Script" id=5]
+
+[sub_resource type="RectangleShape2D" id=1]
+resource_local_to_scene = true
+extents = Vector2( 10, 241 )
+
+[sub_resource type="RectangleShape2D" id=2]
+resource_local_to_scene = true
+extents = Vector2( 10, 273 )
+
+[sub_resource type="RectangleShape2D" id=3]
+resource_local_to_scene = true
+extents = Vector2( 10, 247 )
+
+[sub_resource type="RectangleShape2D" id=4]
+resource_local_to_scene = true
+extents = Vector2( 10, 584 )
+
+[sub_resource type="RectangleShape2D" id=5]
+extents = Vector2( 246, 10 )
+
+[node name="MapBoss" instance=ExtResource( 1 )]
+
+[node name="TextureMap" parent="." index="0"]
+margin_left = -1.0
+margin_right = -1.0
+
+[node name="X" type="Sprite" parent="TextureMap" index="3"]
+position = Vector2( 665, 126 )
+scale = Vector2( 1.5, 1.4 )
+texture = ExtResource( 3 )
+
+[node name="CollisionShape2D" parent="Walls" index="0"]
+shape = SubResource( 1 )
+
+[node name="CollisionShape2D2" parent="Walls" index="1"]
+position = Vector2( 332, 164 )
+shape = SubResource( 2 )
+
+[node name="CollisionShape2D3" parent="Walls" index="2"]
+shape = SubResource( 3 )
+
+[node name="CollisionShape2D4" parent="Walls" index="3"]
+shape = SubResource( 4 )
+
+[node name="CollisionShape2D5" type="CollisionShape2D" parent="Walls" index="4"]
+position = Vector2( 963, 164 )
+shape = SubResource( 5 )
+
+[node name="DOORCollision" type="CollisionShape2D" parent="Walls" index="5"]
+position = Vector2( 663, 164 )
+shape = SubResource( 5 )
+
+[node name="Gate" parent="Gates" index="0" instance=ExtResource( 4 )]
+position = Vector2( 660, 124 )
+
+[node name="Boss" parent="." index="3" instance=ExtResource( 2 )]
+position = Vector2( 985, 460 )
+script = ExtResource( 5 )
+life = 10
+speed = 100
+[connection signal="boss_defetead" from="Boss" to="." method="_on_Boss_boss_defetead"]
+
+[editable path="Walls"]

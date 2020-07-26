@@ -1,0 +1,122 @@
+[gd_scene load_steps=23 format=2]
+
+[ext_resource path="res://src/enemy/Enemy.tscn" type="PackedScene" id=1]
+[ext_resource path="res://assets/sprites/boss/down.png" type="Texture" id=2]
+[ext_resource path="res://assets/sprites/boss/left_right.png" type="Texture" id=3]
+[ext_resource path="res://assets/sprites/zombie/up.png" type="Texture" id=4]
+
+[sub_resource type="AtlasTexture" id=25]
+flags = 4
+atlas = ExtResource( 4 )
+region = Rect2( 0, 0, 49, 80 )
+
+[sub_resource type="AtlasTexture" id=26]
+flags = 4
+atlas = ExtResource( 4 )
+region = Rect2( 49, 0, 49, 80 )
+
+[sub_resource type="AtlasTexture" id=27]
+flags = 4
+atlas = ExtResource( 4 )
+region = Rect2( 98, 0, 49, 80 )
+
+[sub_resource type="AtlasTexture" id=28]
+flags = 4
+atlas = ExtResource( 4 )
+region = Rect2( 147, 0, 49, 80 )
+
+[sub_resource type="AtlasTexture" id=34]
+flags = 4
+atlas = ExtResource( 3 )
+region = Rect2( 0, 0, 82, 122 )
+
+[sub_resource type="AtlasTexture" id=35]
+flags = 4
+atlas = ExtResource( 3 )
+region = Rect2( 82, 0, 82, 122 )
+
+[sub_resource type="AtlasTexture" id=36]
+flags = 4
+atlas = ExtResource( 3 )
+region = Rect2( 164, 0, 82, 122 )
+
+[sub_resource type="AtlasTexture" id=37]
+flags = 4
+atlas = ExtResource( 3 )
+region = Rect2( 246, 0, 82, 122 )
+
+[sub_resource type="AtlasTexture" id=38]
+flags = 4
+atlas = ExtResource( 3 )
+region = Rect2( 328, 0, 82, 122 )
+
+[sub_resource type="AtlasTexture" id=39]
+flags = 4
+atlas = ExtResource( 3 )
+region = Rect2( 410, 0, 82, 122 )
+
+[sub_resource type="AtlasTexture" id=20]
+flags = 4
+atlas = ExtResource( 2 )
+region = Rect2( 0, 0, 72, 122 )
+
+[sub_resource type="AtlasTexture" id=21]
+flags = 4
+atlas = ExtResource( 2 )
+region = Rect2( 72, 0, 72, 122 )
+
+[sub_resource type="AtlasTexture" id=22]
+flags = 4
+atlas = ExtResource( 2 )
+region = Rect2( 144, 0, 72, 122 )
+
+[sub_resource type="AtlasTexture" id=23]
+flags = 4
+atlas = ExtResource( 2 )
+region = Rect2( 216, 0, 72, 122 )
+
+[sub_resource type="AtlasTexture" id=24]
+flags = 4
+atlas = ExtResource( 2 )
+region = Rect2( 288, 0, 72, 122 )
+
+[sub_resource type="SpriteFrames" id=33]
+animations = [ {
+"frames": [ SubResource( 25 ), SubResource( 26 ), SubResource( 27 ), SubResource( 28 ) ],
+"loop": true,
+"name": "up",
+"speed": 5.0
+}, {
+"frames": [ SubResource( 34 ), SubResource( 35 ), SubResource( 36 ), SubResource( 37 ), SubResource( 38 ), SubResource( 39 ) ],
+"loop": true,
+"name": "left_right",
+"speed": 5.0
+}, {
+"frames": [ SubResource( 20 ), SubResource( 21 ), SubResource( 22 ), SubResource( 23 ), SubResource( 24 ) ],
+"loop": true,
+"name": "down",
+"speed": 5.0
+} ]
+
+[sub_resource type="RectangleShape2D" id=40]
+extents = Vector2( 26, 62 )
+
+[sub_resource type="RectangleShape2D" id=41]
+extents = Vector2( 35, 62 )
+
+[node name="Boss" instance=ExtResource( 1 )]
+life = 50
+speed = 150
+
+[node name="AnimatedSprite" parent="." index="0"]
+frames = SubResource( 33 )
+
+[node name="CollisionShape2D" parent="." index="1"]
+shape = SubResource( 40 )
+
+[node name="CollisionShape2D" parent="AreaDamage" index="0"]
+shape = SubResource( 41 )
+
+[node name="TextureProgress" parent="." index="5"]
+margin_top = -78.0
+margin_bottom = -75.0
