@@ -14,9 +14,10 @@ func _on_TranslateScene_animation_finished(anim_name):
 
 func _on_BossGate_body_entered(body):
 	if Game.key:
-		var player = get_tree().root.find_node("Player", true, false)
-		player.position = Vector2(300, 500)
-		get_tree().change_scene("res://src/map/MapBoss.tscn")
+		var map = (Game.pre_maps["Boss"].instance() as Map)
+		queue_free()
+		map.get_node("Player").position = Vector2(300, 500)
+		get_tree().root.add_child(map)
 	else:
 		get_tree().root.get_node("UI/KeyAdvice").visible = true
 

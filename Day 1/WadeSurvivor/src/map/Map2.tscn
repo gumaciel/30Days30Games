@@ -1,37 +1,38 @@
-[gd_scene load_steps=12 format=2]
+[gd_scene load_steps=13 format=2]
 
 [ext_resource path="res://src/map/Map.tscn" type="PackedScene" id=1]
+[ext_resource path="res://src/Player/Player.tscn" type="PackedScene" id=2]
 [ext_resource path="res://assets/maps/map2.png" type="Texture" id=3]
 [ext_resource path="res://src/enemy/Enemy.tscn" type="PackedScene" id=4]
 [ext_resource path="res://src/map/Gate.tscn" type="PackedScene" id=5]
 
-[sub_resource type="RectangleShape2D" id=2]
+[sub_resource type="RectangleShape2D" id=1]
 resource_local_to_scene = true
-extents = Vector2( 10, 108 )
+extents = Vector2( 10, 79 )
 
-[sub_resource type="RectangleShape2D" id=3]
+[sub_resource type="RectangleShape2D" id=2]
 resource_local_to_scene = true
 extents = Vector2( 10, 261 )
 
-[sub_resource type="RectangleShape2D" id=4]
+[sub_resource type="RectangleShape2D" id=3]
 resource_local_to_scene = true
-extents = Vector2( 10, 123 )
+extents = Vector2( 10, 104 )
 
-[sub_resource type="RectangleShape2D" id=5]
+[sub_resource type="RectangleShape2D" id=4]
 resource_local_to_scene = true
 extents = Vector2( 10, 252 )
 
-[sub_resource type="RectangleShape2D" id=6]
+[sub_resource type="RectangleShape2D" id=5]
 resource_local_to_scene = true
 extents = Vector2( 260, 10 )
 
+[sub_resource type="RectangleShape2D" id=6]
+resource_local_to_scene = true
+extents = Vector2( 93, 10 )
+
 [sub_resource type="RectangleShape2D" id=7]
 resource_local_to_scene = true
-extents = Vector2( 108, 10 )
-
-[sub_resource type="RectangleShape2D" id=8]
-resource_local_to_scene = true
-extents = Vector2( 108, 10 )
+extents = Vector2( 90.0001, 10 )
 
 [node name="Map2" instance=ExtResource( 1 )]
 gates = {
@@ -41,7 +42,10 @@ gates = {
 "top": true
 }
 
-[node name="TextureMap" parent="." index="0"]
+[node name="Player" parent="." index="0" instance=ExtResource( 2 )]
+position = Vector2( 251, 498 )
+
+[node name="TextureMap" parent="." index="1"]
 texture = ExtResource( 3 )
 
 [node name="Light2D" parent="TextureMap" index="0"]
@@ -55,77 +59,77 @@ autoplay = "auto_load"
 
 [node name="CollisionShape2D" parent="Walls" index="0"]
 position = Vector2( 72, 227 )
-shape = SubResource( 2 )
+shape = SubResource( 1 )
 
 [node name="CollisionShape2D2" parent="Walls" index="1"]
 position = Vector2( 342, 164 )
-shape = SubResource( 3 )
+shape = SubResource( 2 )
 
 [node name="CollisionShape2D3" parent="Walls" index="2"]
 position = Vector2( 1225, 204 )
-shape = SubResource( 4 )
+shape = SubResource( 3 )
 
 [node name="CollisionShape2D4" parent="Walls" index="3"]
 position = Vector2( 983, 636 )
-shape = SubResource( 5 )
+shape = SubResource( 4 )
 
 [node name="CollisionShape2D5" type="CollisionShape2D" parent="Walls" index="4"]
 position = Vector2( 330, 637 )
-shape = SubResource( 6 )
+shape = SubResource( 5 )
 
 [node name="CollisionShape2D8" type="CollisionShape2D" parent="Walls" index="5"]
 position = Vector2( 980, 163 )
-shape = SubResource( 6 )
+shape = SubResource( 5 )
 
 [node name="CollisionShape2D6" type="CollisionShape2D" parent="Walls" index="6"]
 position = Vector2( 72, 542 )
 rotation = 1.57079
-shape = SubResource( 7 )
+shape = SubResource( 6 )
 
 [node name="CollisionShape2D7" type="CollisionShape2D" parent="Walls" index="7"]
 position = Vector2( 1229, 546 )
 rotation = 1.57079
-shape = SubResource( 8 )
+shape = SubResource( 7 )
 
-[node name="Enemy" parent="." index="2" instance=ExtResource( 4 )]
-position = Vector2( 256, 271 )
+[node name="Enemy" parent="." index="3" instance=ExtResource( 4 )]
+position = Vector2( 348, 254 )
 
-[node name="Enemy2" parent="." index="3" instance=ExtResource( 4 )]
+[node name="Enemy2" parent="." index="4" instance=ExtResource( 4 )]
 position = Vector2( 994, 267 )
 
-[node name="GateTop" parent="Gates" index="0" instance=ExtResource( 5 )]
+[node name="Top" parent="Gates" index="0" instance=ExtResource( 5 )]
 position = Vector2( 664, 117 )
 
-[node name="Position2D" parent="Gates/GateTop" index="1"]
-position = Vector2( 0, 110 )
+[node name="Position2D" parent="Gates/Top" index="1"]
+position = Vector2( 1, 106 )
 
-[node name="GateBottom" parent="Gates" index="1" instance=ExtResource( 5 )]
+[node name="Bottom" parent="Gates" index="1" instance=ExtResource( 5 )]
 position = Vector2( 664, 691 )
 id = "BOTTOM"
 
-[node name="Position2D" parent="Gates/GateBottom" index="1"]
-position = Vector2( 0, -110 )
+[node name="Position2D" parent="Gates/Bottom" index="1"]
+position = Vector2( -4, -126 )
 
-[node name="GateRight" parent="Gates" index="2" instance=ExtResource( 5 )]
+[node name="Right" parent="Gates" index="2" instance=ExtResource( 5 )]
 position = Vector2( 1282, 383 )
 id = "RIGHT"
 
-[node name="Position2D" parent="Gates/GateRight" index="1"]
-position = Vector2( -130, 0 )
+[node name="Position2D" parent="Gates/Right" index="1"]
+position = Vector2( -143, 1 )
 
-[node name="GateLeft" parent="Gates" index="3" instance=ExtResource( 5 )]
+[node name="Left" parent="Gates" index="3" instance=ExtResource( 5 )]
 position = Vector2( 20, 385 )
 id = "LEFT"
 
-[node name="Position2D" parent="Gates/GateLeft" index="1"]
-position = Vector2( 100, 0 )
+[node name="Position2D" parent="Gates/Left" index="1"]
+position = Vector2( 141, 1 )
 
 [editable path="Walls"]
 
-[editable path="Gates/GateTop"]
+[editable path="Gates/Top"]
 
-[editable path="Gates/GateBottom"]
+[editable path="Gates/Bottom"]
 
-[editable path="Gates/GateRight"]
+[editable path="Gates/Right"]
 
-[editable path="Gates/GateLeft"]
+[editable path="Gates/Left"]

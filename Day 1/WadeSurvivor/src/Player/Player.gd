@@ -29,7 +29,6 @@ func _physics_process(delta : float):
 	_animation()
 	_shoot()
 	move_and_slide(velocity * speed)
-
 func set_life(value):
 	life -= value
 	$TextureProgress.value = life
@@ -39,7 +38,7 @@ func apply_damage(value: int):
 	$DamagePlayer.play("damage")
 	if life <= 0: #gameover
 		queue_free()
-		get_tree().root.get_node("/root/UI/Dead").visible = true
+		UI.alive = false
 
 func _shoot():
 	if shoot.down or shoot.up or shoot.right or shoot.left:

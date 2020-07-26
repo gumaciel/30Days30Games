@@ -1,8 +1,9 @@
-[gd_scene load_steps=12 format=2]
+[gd_scene load_steps=13 format=2]
 
 [ext_resource path="res://src/map/Map.tscn" type="PackedScene" id=1]
 [ext_resource path="res://assets/maps/map5.png" type="Texture" id=2]
 [ext_resource path="res://src/map/Gate.tscn" type="PackedScene" id=3]
+[ext_resource path="res://src/Player/Player.tscn" type="PackedScene" id=4]
 
 [sub_resource type="RectangleShape2D" id=1]
 resource_local_to_scene = true
@@ -23,16 +24,22 @@ extents = Vector2( 10, 240 )
 [sub_resource type="RectangleShape2D" id=5]
 extents = Vector2( 258, 10 )
 
-[sub_resource type="RectangleShape2D" id=7]
+[sub_resource type="RectangleShape2D" id=6]
 extents = Vector2( 147, 10 )
 
-[sub_resource type="RectangleShape2D" id=8]
+[sub_resource type="RectangleShape2D" id=7]
 extents = Vector2( 34, 10 )
 
-[sub_resource type="RectangleShape2D" id=6]
+[sub_resource type="RectangleShape2D" id=8]
 extents = Vector2( 107, 58 )
 
 [node name="Map5" instance=ExtResource( 1 )]
+gates = {
+"bottom": true,
+"left": false,
+"right": false,
+"top": false
+}
 
 [node name="TextureMap" parent="." index="0"]
 texture = ExtResource( 2 )
@@ -61,24 +68,24 @@ shape = SubResource( 5 )
 
 [node name="CollisionShape2D7" type="CollisionShape2D" parent="Walls" index="6"]
 position = Vector2( 664, 135 )
-shape = SubResource( 7 )
+shape = SubResource( 6 )
 
 [node name="CollisionShape2D8" type="CollisionShape2D" parent="Walls" index="7"]
 position = Vector2( 538, 138 )
 rotation = 1.57079
-shape = SubResource( 8 )
+shape = SubResource( 7 )
 
 [node name="CollisionShape2D9" type="CollisionShape2D" parent="Walls" index="8"]
 position = Vector2( 796, 140 )
 rotation = 1.57079
-shape = SubResource( 8 )
+shape = SubResource( 7 )
 
-[node name="Gate" parent="Gates" index="0" instance=ExtResource( 3 )]
-position = Vector2( 661, 690 )
+[node name="Bottom" parent="Gates" index="0" instance=ExtResource( 3 )]
+position = Vector2( 662, 683 )
 id = "BOTTOM"
 
-[node name="Position2D" parent="Gates/Gate" index="1"]
-position = Vector2( 0, -110 )
+[node name="Position2D" parent="Gates/Bottom" index="1"]
+position = Vector2( 0, -106 )
 
 [node name="BossGate" type="Area2D" parent="." index="3"]
 position = Vector2( 662, 105 )
@@ -87,10 +94,13 @@ collision_mask = 4
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="BossGate" index="0"]
 self_modulate = Color( 1, 0, 0.820313, 1 )
-shape = SubResource( 6 )
+shape = SubResource( 8 )
+
+[node name="Player" parent="." index="4" instance=ExtResource( 4 )]
+position = Vector2( 641, 334 )
 [connection signal="body_entered" from="BossGate" to="." method="_on_BossGate_body_entered"]
 [connection signal="body_exited" from="BossGate" to="." method="_on_BossGate_body_exited"]
 
 [editable path="Walls"]
 
-[editable path="Gates/Gate"]
+[editable path="Gates/Bottom"]

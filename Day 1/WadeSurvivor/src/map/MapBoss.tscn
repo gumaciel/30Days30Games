@@ -1,10 +1,11 @@
-[gd_scene load_steps=11 format=2]
+[gd_scene load_steps=12 format=2]
 
 [ext_resource path="res://src/map/Map.tscn" type="PackedScene" id=1]
 [ext_resource path="res://src/enemy/Boss.tscn" type="PackedScene" id=2]
 [ext_resource path="res://assets/maps/X.png" type="Texture" id=3]
 [ext_resource path="res://src/map/Gate.tscn" type="PackedScene" id=4]
 [ext_resource path="res://src/enemy/Boss.gd" type="Script" id=5]
+[ext_resource path="res://src/Player/Player.tscn" type="PackedScene" id=6]
 
 [sub_resource type="RectangleShape2D" id=1]
 resource_local_to_scene = true
@@ -57,7 +58,7 @@ shape = SubResource( 5 )
 position = Vector2( 663, 164 )
 shape = SubResource( 5 )
 
-[node name="Gate" parent="Gates" index="0" instance=ExtResource( 4 )]
+[node name="Top" parent="Gates" index="0" instance=ExtResource( 4 )]
 position = Vector2( 660, 124 )
 
 [node name="Boss" parent="." index="3" instance=ExtResource( 2 )]
@@ -65,6 +66,11 @@ position = Vector2( 985, 460 )
 script = ExtResource( 5 )
 life = 10
 speed = 100
+
+[node name="Player" parent="." index="4" instance=ExtResource( 6 )]
+position = Vector2( 201, 271 )
 [connection signal="boss_defetead" from="Boss" to="." method="_on_Boss_boss_defetead"]
 
 [editable path="Walls"]
+
+[editable path="Gates/Top"]

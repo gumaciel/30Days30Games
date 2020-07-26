@@ -13,7 +13,7 @@ var current_animation = "left_right"
 func _ready():
 	$TextureProgress.max_value = life
 	$TextureProgress.value = life
-	player = get_tree().root.find_node("Player", true, false)
+	player = get_parent().find_node("Player")
 	$AnimatedSprite.play("left_right")
 
 func set_life(value):

@@ -11,7 +11,6 @@ func _input(event : InputEvent):
 		$TranslateScene.play("change_scene")
 
 
-
 func _on_TranslateScene_animation_finished(anim_name : String):
 	if anim_name == "change_scene":
 		get_tree().change_scene("res://src/tutorial/Tutorial.tscn")
