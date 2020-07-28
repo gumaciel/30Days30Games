@@ -1,0 +1,72 @@
+[gd_scene load_steps=7 format=2]
+
+[ext_resource path="res://assets/touch/arrowLeft.png" type="Texture" id=3]
+[ext_resource path="res://assets/touch/arrowRight.png" type="Texture" id=4]
+[ext_resource path="res://assets/touch/arrowUp.png" type="Texture" id=6]
+[ext_resource path="res://assets/touch/buttonX.png" type="Texture" id=8]
+[ext_resource path="res://assets/touch/buttonSelect.png" type="Texture" id=11]
+[ext_resource path="res://src/util/UI.gd" type="Script" id=12]
+
+[node name="UI" type="Control"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+script = ExtResource( 12 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Restart" type="TouchScreenButton" parent="."]
+visible = false
+position = Vector2( 435.561, 269.164 )
+scale = Vector2( 3, 3 )
+z_index = 1
+normal = ExtResource( 11 )
+action = "restart"
+visibility_mode = 1
+__meta__ = {
+"_editor_description_": "	3"
+}
+
+[node name="Controls" type="Node2D" parent="."]
+position = Vector2( -64, 128 )
+
+[node name="Move" type="Node2D" parent="Controls"]
+
+[node name="LeftButton" type="TouchScreenButton" parent="Controls/Move"]
+position = Vector2( 195.84, 446.169 )
+scale = Vector2( 2, 2 )
+z_index = 2
+normal = ExtResource( 3 )
+passby_press = true
+action = "ui_left"
+visibility_mode = 1
+
+[node name="RightButton" type="TouchScreenButton" parent="Controls/Move"]
+position = Vector2( 387.84, 446.169 )
+scale = Vector2( 2, 2 )
+z_index = 2
+normal = ExtResource( 4 )
+passby_press = true
+action = "ui_right"
+visibility_mode = 1
+
+[node name="UpButton" type="TouchScreenButton" parent="Controls/Move"]
+position = Vector2( 291.84, 350.169 )
+scale = Vector2( 2, 2 )
+z_index = 2
+normal = ExtResource( 6 )
+passby_press = true
+action = "ui_up"
+visibility_mode = 1
+
+[node name="Attack" type="Node2D" parent="Controls"]
+
+[node name="AttackButton" type="TouchScreenButton" parent="Controls/Attack"]
+position = Vector2( 859.84, 446.169 )
+scale = Vector2( 2, 2 )
+z_index = 2
+normal = ExtResource( 8 )
+passby_press = true
+action = "ui_select"
+visibility_mode = 1
+[connection signal="alive_changed" from="." to="." method="_on_UI_alive_changed"]
