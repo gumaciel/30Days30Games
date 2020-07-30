@@ -17,6 +17,8 @@ var life := 5
 var time_to_shoot := 0.5
 var calculate_time := 0.0
 
+var time_shake = 0
+
 func _physics_process(delta: float) -> void:
 	_move(delta)
 
@@ -42,10 +44,19 @@ func stop_moving_particles():
 	$MovingParticles.emitting = false
 	particles_velocity = 0.1
 	
-
+func _process(delta):
+	if time_shake > 0:
+		$Camera2D.offset = Vector2(cos(rad2deg(time_shake)), sin(rad2deg(time_shake))) * 2
+		time_shake -= delta
+	else:
+		$Camera2D.offset = Vector2.ZERO
+		set_process(false)
 
 func _on_Area2D_area_entered(area):
 	life -= 1
+	get_parent().get_node("UI/Lifes").life = life
+	time_shake = 0.5
+	set_process(true)
 	if life <= 0:
 		queue_free()
 		get_parent().get_node("Transition").change_to_scene("res://src/main/Main.tscn")

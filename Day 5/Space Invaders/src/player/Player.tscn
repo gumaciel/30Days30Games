@@ -50,4 +50,12 @@ process_material = SubResource( 4 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource( 5 )
+
+[node name="Camera2D" type="Camera2D" parent="."]
+anchor_mode = 0
+current = true
+limit_left = 0
+limit_top = 0
+limit_right = 540
+limit_bottom = 1170
 [connection signal="area_entered" from="Area2D" to="." method="_on_Area2D_area_entered"]

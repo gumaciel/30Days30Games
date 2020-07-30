@@ -1,0 +1,17 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://assets/PNG/UI/playerLife1_blue.png" type="Texture" id=1]
+[ext_resource path="res://src/util/UI/Lifes.gd" type="Script" id=2]
+
+[node name="UI" type="Control"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Lifes" type="Node2D" parent="."]
+scale = Vector2( 1.5, 1.5 )
+z_index = 2
+script = ExtResource( 2 )
+life_texture = ExtResource( 1 )
