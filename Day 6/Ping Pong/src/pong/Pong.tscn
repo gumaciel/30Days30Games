@@ -1,0 +1,14 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://src/pong/Pong.gd" type="Script" id=1]
+[ext_resource path="res://assets/pong/PongPaddle.jpg" type="Texture" id=2]
+
+[node name="Pong" type="KinematicBody2D"]
+scale = Vector2( 2, 2 )
+script = ExtResource( 1 )
+
+[node name="Body" type="Sprite" parent="."]
+texture = ExtResource( 2 )
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="."]
+polygon = PoolVector2Array( 0, -49.5, 8.5, -47.5, 12.5, -44.5, 19, -1, 12.5, 44.5, 10, 47, 0, 50, -8.5, 48, -12, 45.5, -20, 0, -12.5, -44.5, -7.5, -48 )
