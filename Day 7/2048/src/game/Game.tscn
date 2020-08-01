@@ -1,0 +1,84 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://src/game/Game.gd" type="Script" id=1]
+
+[sub_resource type="RectangleShape2D" id=1]
+extents = Vector2( 400, 10 )
+
+[node name="Game" type="Control"]
+anchor_left = 0.151783
+anchor_top = 0.563474
+anchor_right = 0.892523
+anchor_bottom = 0.905354
+margin_left = -163.925
+margin_top = -1318.53
+margin_right = -163.925
+margin_bottom = -1318.53
+rect_min_size = Vector2( 800, 800 )
+script = ExtResource( 1 )
+__meta__ = {
+"_edit_use_anchors_": true
+}
+
+[node name="Walls" type="StaticBody2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Walls"]
+position = Vector2( 400, 0 )
+shape = SubResource( 1 )
+
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="Walls"]
+position = Vector2( 400, 800 )
+shape = SubResource( 1 )
+
+[node name="CollisionShape2D3" type="CollisionShape2D" parent="Walls"]
+position = Vector2( 0, 400 )
+rotation = 1.5708
+shape = SubResource( 1 )
+
+[node name="CollisionShape2D4" type="CollisionShape2D" parent="Walls"]
+position = Vector2( 800, 400 )
+rotation = 1.5708
+shape = SubResource( 1 )
+
+[node name="Lines" type="Node2D" parent="Walls"]
+
+[node name="Line2D" type="Line2D" parent="Walls/Lines"]
+points = PoolVector2Array( 0, 0, 800, 0 )
+
+[node name="Line2D2" type="Line2D" parent="Walls/Lines"]
+position = Vector2( 0, 200 )
+points = PoolVector2Array( 0, 0, 800, 0 )
+
+[node name="Line2D3" type="Line2D" parent="Walls/Lines"]
+position = Vector2( 0, 400 )
+points = PoolVector2Array( 0, 0, 800, 0 )
+
+[node name="Line2D4" type="Line2D" parent="Walls/Lines"]
+position = Vector2( 0, 600 )
+points = PoolVector2Array( 0, 0, 800, 0 )
+
+[node name="Line2D5" type="Line2D" parent="Walls/Lines"]
+position = Vector2( 0, 800 )
+points = PoolVector2Array( 0, 0, 800, 0 )
+
+[node name="Line2D6" type="Line2D" parent="Walls/Lines"]
+points = PoolVector2Array( 0, 0, 0, 800 )
+
+[node name="Line2D7" type="Line2D" parent="Walls/Lines"]
+position = Vector2( 200, 0 )
+points = PoolVector2Array( 0, 0, 0, 800 )
+
+[node name="Line2D8" type="Line2D" parent="Walls/Lines"]
+position = Vector2( 400, 0 )
+points = PoolVector2Array( 0, 0, 0, 800 )
+
+[node name="Line2D9" type="Line2D" parent="Walls/Lines"]
+position = Vector2( 600, 0 )
+points = PoolVector2Array( 0, 0, 0, 800 )
+
+[node name="Line2D10" type="Line2D" parent="Walls/Lines"]
+position = Vector2( 800, 0 )
+points = PoolVector2Array( 0, 0, 0, 800 )
+
+[node name="Numbers" type="Node2D" parent="."]
+[connection signal="gui_input" from="." to="." method="_on_Game_gui_input"]

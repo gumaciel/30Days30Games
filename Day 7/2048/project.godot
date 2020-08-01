@@ -1,0 +1,36 @@
+; Engine configuration file.
+; It's best edited using the editor UI and not directly,
+; since the parameters that go here are not all obvious.
+;
+; Format:
+;   [section] ; section goes between []
+;   param=value ; assign values to parameters
+
+config_version=4
+
+_global_script_classes=[ {
+"base": "KinematicBody2D",
+"class": "Number",
+"language": "GDScript",
+"path": "res://src/game/Number.gd"
+} ]
+_global_script_class_icons={
+"Number": ""
+}
+
+[application]
+
+config/name="2048"
+run/main_scene="res://src/main/Main.tscn"
+config/icon="res://icon.png"
+
+[display]
+
+window/size/width=1080
+window/size/height=2340
+window/stretch/mode="viewport"
+window/stretch/aspect="keep"
+
+[rendering]
+
+environment/default_clear_color=Color( 0.862745, 0.823529, 0.823529, 1 )

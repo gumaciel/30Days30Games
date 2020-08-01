@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   version="1.2"
+   width="100"
+   height="100"
+   id="svg2">
+  <metadata
+     id="metadata17">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title></dc:title>
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <defs
+     id="defs15" />
+  <g
+     id="g4">
+    <title
+       id="title6">Layer 1</title>
+  </g>
+  <g
+     id="g8">
+    <title
+       id="title10">Layer 2</title>
+    <path
+       d="m 6,0 88,0 c 3.324,0 6,2.676 6,6 l 0,88 c 0,3.324 -2.676,6 -6,6 L 6,100 C 2.676,100 0,97.324 0,94 L 0,6 C 0,2.676 2.676,0 6,0 z"
+       id="svg_10"
+       style="fill:#eee4da" />
+  </g>
+  <g
+     id="text2989"
+     style="font-size:72px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#776e65;fill-opacity:1;stroke:none;font-family:Clear Sans;-inkscape-font-specification:Clear Sans">
+    <path
+       d="m 37.144135,66.796448 0,-5.90149 c 4.372957,-3.712758 7.537423,-6.498451 9.493408,-8.357086 1.955958,-1.858606 3.545185,-3.479444 4.767685,-4.862518 1.222464,-1.383036 2.170517,-2.73504 2.844162,-4.056015 0.673603,-1.320929 1.010415,-2.744547 1.010437,-4.270859 -2.2e-5,-1.650463 -0.541887,-2.969737 -1.625595,-3.957824 -1.08375,-0.988026 -2.530866,-1.482054 -4.341355,-1.482087 -1.7445,3.3e-5 -3.167279,0.383563 -4.268341,1.150589 -1.101085,0.767091 -2.150685,1.875717 -3.148804,3.325882 l -4.837341,-2.9776 c 1.360672,-2.547878 3.082498,-4.333206 5.165482,-5.355987 2.082966,-1.022708 4.516461,-1.534081 7.300491,-1.534119 3.674704,3.8e-5 6.605304,0.925432 8.791809,2.776184 2.186456,1.850823 3.279696,4.447968 3.279724,7.791443 -2.8e-5,1.651637 -0.23809,3.214009 -0.714187,4.687118 -0.476152,1.473156 -1.220552,2.875794 -2.2332,4.207917 -1.0127,1.33216 -2.332812,2.816203 -3.960343,4.452133 -1.627573,1.635958 -5.241028,4.591176 -10.840378,8.865662 l 18.933106,0 0,5.498657 z"
+       id="path3762"
+       style="font-size:55px;font-weight:bold;fill:#776e65" />
+  </g>
+</svg>
