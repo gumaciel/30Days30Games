@@ -64,10 +64,10 @@ __meta__ = {
 [node name="Movement" type="Control" parent="Buttons/Control"]
 anchor_right = 1.0
 anchor_bottom = 1.0
-margin_left = 40.0
-margin_top = 104.0
-margin_right = 40.0
-margin_bottom = 104.0
+margin_left = 48.0
+margin_top = 256.0
+margin_right = 48.0
+margin_bottom = 256.0
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -95,10 +95,10 @@ action = "ui_down"
 [node name="Others" type="Control" parent="Buttons/Control"]
 anchor_right = 1.0
 anchor_bottom = 1.0
-margin_left = 184.0
-margin_top = 104.0
-margin_right = 184.0
-margin_bottom = 104.0
+margin_left = 192.0
+margin_top = 256.0
+margin_right = 192.0
+margin_bottom = 256.0
 __meta__ = {
 "_edit_use_anchors_": false
 }

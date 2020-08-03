@@ -27,9 +27,9 @@ config/icon="res://icon.png"
 [display]
 
 window/size/width=240
-window/size/height=208
-window/size/test_width=720
-window/size/test_height=624
+window/size/height=368
+window/size/test_width=480
+window/size/test_height=736
 window/handheld/orientation="portrait"
 window/stretch/mode="viewport"
 window/stretch/aspect="keep"
