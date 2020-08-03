@@ -1,0 +1,8 @@
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://assets/bomb_party_v4.png" type="Texture" id=1]
+
+[node name="FireSprite" type="Sprite"]
+texture = ExtResource( 1 )
+region_enabled = true
+region_rect = Rect2( 224, 288, 16, 16 )
