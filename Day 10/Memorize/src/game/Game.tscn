@@ -1,0 +1,171 @@
+[gd_scene load_steps=11 format=2]
+
+[ext_resource path="res://src/tile/Tile.tscn" type="PackedScene" id=1]
+[ext_resource path="res://src/game/Game.gd" type="Script" id=2]
+[ext_resource path="res://assets/sprites/penguim.png" type="Texture" id=3]
+[ext_resource path="res://assets/sprites/good_penguim.png" type="Texture" id=4]
+[ext_resource path="res://assets/sprites/gothic_sheep.png" type="Texture" id=5]
+[ext_resource path="res://assets/sprites/peeker.png" type="Texture" id=6]
+[ext_resource path="res://assets/sprites/background.jpg" type="Texture" id=7]
+[ext_resource path="res://assets/fonts/Cute_Font.ttf" type="DynamicFontData" id=8]
+
+[sub_resource type="DynamicFont" id=1]
+size = 64
+font_data = ExtResource( 8 )
+
+[sub_resource type="DynamicFont" id=2]
+size = 64
+font_data = ExtResource( 8 )
+
+[node name="Game" type="Node2D"]
+script = ExtResource( 2 )
+
+[node name="TextureRect" type="TextureRect" parent="."]
+margin_right = 1066.0
+margin_bottom = 600.0
+texture = ExtResource( 7 )
+__meta__ = {
+"_edit_lock_": true,
+"_edit_use_anchors_": false
+}
+
+[node name="Title" type="Label" parent="."]
+anchor_left = 0.5
+anchor_right = 0.5
+margin_left = 195.0
+margin_right = 847.0
+margin_bottom = 60.0
+custom_fonts/font = SubResource( 1 )
+text = "Memorize! - Animal Crossingw"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Time" type="Label" parent="."]
+anchor_left = 0.5
+anchor_right = 0.5
+margin_left = 325.0
+margin_top = 65.0
+margin_right = 702.0
+margin_bottom = 125.0
+custom_fonts/font = SubResource( 1 )
+text = "Remaing time: 0.0"
+align = 1
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Tiles" type="Node2D" parent="."]
+
+[node name="Tile" parent="Tiles" instance=ExtResource( 1 )]
+id = "penguim"
+
+[node name="TextureButton" parent="Tiles/Tile" index="0"]
+margin_right = 64.0
+margin_bottom = 64.0
+texture_normal = ExtResource( 3 )
+
+[node name="Tile2" parent="Tiles" instance=ExtResource( 1 )]
+id = "penguim"
+
+[node name="TextureButton" parent="Tiles/Tile2" index="0"]
+texture_normal = ExtResource( 3 )
+
+[node name="Tile3" parent="Tiles" instance=ExtResource( 1 )]
+id = "good_penguim"
+
+[node name="TextureButton" parent="Tiles/Tile3" index="0"]
+texture_normal = ExtResource( 4 )
+
+[node name="Tile4" parent="Tiles" instance=ExtResource( 1 )]
+id = "good_penguim"
+
+[node name="TextureButton" parent="Tiles/Tile4" index="0"]
+texture_normal = ExtResource( 4 )
+
+[node name="Tile5" parent="Tiles" instance=ExtResource( 1 )]
+id = "gothic_sheep"
+
+[node name="TextureButton" parent="Tiles/Tile5" index="0"]
+margin_right = 64.0
+margin_bottom = 64.0
+texture_normal = ExtResource( 5 )
+
+[node name="Tile6" parent="Tiles" instance=ExtResource( 1 )]
+id = "gothic_sheep"
+
+[node name="TextureButton" parent="Tiles/Tile6" index="0"]
+margin_right = 64.0
+margin_bottom = 64.0
+texture_normal = ExtResource( 5 )
+
+[node name="Tile7" parent="Tiles" instance=ExtResource( 1 )]
+id = "peeker"
+
+[node name="TextureButton" parent="Tiles/Tile7" index="0"]
+margin_right = 64.0
+margin_bottom = 64.0
+texture_normal = ExtResource( 6 )
+
+[node name="Tile8" parent="Tiles" instance=ExtResource( 1 )]
+id = "peeker"
+
+[node name="TextureButton" parent="Tiles/Tile8" index="0"]
+margin_right = 64.0
+margin_bottom = 64.0
+texture_normal = ExtResource( 6 )
+
+[node name="Positions" type="Node2D" parent="."]
+
+[node name="Position2D" type="Position2D" parent="Positions"]
+position = Vector2( 195, 195 )
+
+[node name="Position2D2" type="Position2D" parent="Positions"]
+position = Vector2( 260, 195 )
+
+[node name="Position2D3" type="Position2D" parent="Positions"]
+position = Vector2( 384, 195 )
+
+[node name="Position2D4" type="Position2D" parent="Positions"]
+position = Vector2( 448, 195 )
+
+[node name="Position2D5" type="Position2D" parent="Positions"]
+position = Vector2( 384, 260 )
+
+[node name="Position2D6" type="Position2D" parent="Positions"]
+position = Vector2( 448, 260 )
+
+[node name="Position2D7" type="Position2D" parent="Positions"]
+position = Vector2( 448, 325 )
+
+[node name="Position2D8" type="Position2D" parent="Positions"]
+position = Vector2( 384, 325 )
+
+[node name="ReloadButton" type="Button" parent="."]
+margin_left = 715.0
+margin_top = 64.0
+margin_right = 894.0
+margin_bottom = 130.0
+custom_fonts/font = SubResource( 2 )
+text = "RELOAD"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+[connection signal="pressed" from="ReloadButton" to="." method="_on_Button_pressed"]
+
+[editable path="Tiles/Tile"]
+
+[editable path="Tiles/Tile2"]
+
+[editable path="Tiles/Tile3"]
+
+[editable path="Tiles/Tile4"]
+
+[editable path="Tiles/Tile5"]
+
+[editable path="Tiles/Tile6"]
+
+[editable path="Tiles/Tile7"]
+
+[editable path="Tiles/Tile8"]
