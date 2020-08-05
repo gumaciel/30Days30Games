@@ -2,11 +2,10 @@ extends Spatial
 
 class_name Game
 
-# Called when the node enters the scene tree for the first time.
+onready var monster = $Navigation/Enemy
+onready var player = $Navigation/Player
+onready var navigation = $Navigation
+
 func _ready():
-	pass # Replace with function body.
-
-
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-#func _process(delta):
-#	pass
+	monster.set_nav(navigation)
+	monster.set_target(player)
