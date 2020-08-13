@@ -1,0 +1,70 @@
+[gd_scene load_steps=7 format=2]
+
+[ext_resource path="res://assets/fonts/Monster Mech.ttf" type="DynamicFontData" id=1]
+[ext_resource path="res://assets/sprites/circle-computer-icons-solid-color-png-clip-art-thumbnail.png" type="Texture" id=2]
+[ext_resource path="res://src/core/Game.gd" type="Script" id=3]
+
+[sub_resource type="DynamicFont" id=1]
+size = 64
+font_data = ExtResource( 1 )
+
+[sub_resource type="DynamicFont" id=2]
+size = 64
+font_data = ExtResource( 1 )
+
+[sub_resource type="CircleShape2D" id=3]
+radius = 492.242
+
+[node name="Game" type="Node2D"]
+position = Vector2( 326.581, 41.5305 )
+script = ExtResource( 3 )
+
+[node name="UI" type="Control" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_right = 600.0
+margin_bottom = 1024.0
+__meta__ = {
+"_edit_lock_": true,
+"_edit_use_anchors_": false
+}
+
+[node name="Title" type="Label" parent="UI"]
+anchor_left = 0.5
+anchor_right = 0.5
+margin_left = -41.0
+margin_right = 41.0
+margin_bottom = 85.0
+custom_fonts/font = SubResource( 1 )
+text = "bb"
+
+[node name="Circle" type="Sprite" parent="."]
+position = Vector2( 304.708, 873.216 )
+texture = ExtResource( 2 )
+
+[node name="CanvasLayer" type="Node" parent="Circle"]
+
+[node name="Level" type="Label" parent="Circle/CanvasLayer"]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = 23.1738
+margin_top = -148.096
+margin_right = 45.1738
+margin_bottom = -63.0956
+custom_fonts/font = SubResource( 2 )
+text = "1"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Area2D" type="Area2D" parent="Circle"]
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Circle/Area2D"]
+shape = SubResource( 3 )
+
+[node name="BallSpawnPosition2D" type="Position2D" parent="."]
+position = Vector2( 308.392, 1695.86 )
+[connection signal="area_entered" from="Circle/Area2D" to="." method="_on_Area2D_area_entered"]
