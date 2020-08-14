@@ -1,0 +1,21 @@
+[remap]
+
+importer="wav"
+type="AudioStreamSample"
+path="res://.import/Cat2.wav-4116ec8d95ecc4ddd484294ee2551ced.sample"
+
+[deps]
+
+source_file="res://assets/sfx/Cat2.wav"
+dest_files=[ "res://.import/Cat2.wav-4116ec8d95ecc4ddd484294ee2551ced.sample" ]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop=false
+compress/mode=0
