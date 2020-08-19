@@ -1,0 +1,73 @@
+[gd_scene load_steps=5 format=2]
+
+[ext_resource path="res://src/core/Game.gd" type="Script" id=1]
+[ext_resource path="res://assets/fonts/Wild Hazelnut.ttf" type="DynamicFontData" id=2]
+
+[sub_resource type="DynamicFont" id=1]
+size = 32
+font_data = ExtResource( 2 )
+
+[sub_resource type="DynamicFont" id=2]
+size = 32
+font_data = ExtResource( 2 )
+
+[node name="Game" type="Node2D"]
+script = ExtResource( 1 )
+
+[node name="Label" type="Label" parent="."]
+margin_right = 414.0
+margin_bottom = 42.0
+custom_fonts/font = SubResource( 1 )
+text = "Select the order of the numbers: "
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Status" type="Label" parent="."]
+margin_left = 278.982
+margin_top = 520.587
+margin_right = 692.982
+margin_bottom = 562.587
+custom_fonts/font = SubResource( 1 )
+align = 1
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Positions" type="Node2D" parent="."]
+
+[node name="Position2D" type="Position2D" parent="Positions"]
+position = Vector2( 288.899, 272.577 )
+
+[node name="Position2D2" type="Position2D" parent="Positions"]
+position = Vector2( 429.053, 297.331 )
+
+[node name="Position2D3" type="Position2D" parent="Positions"]
+position = Vector2( 678.482, 301.456 )
+
+[node name="Position2D4" type="Position2D" parent="Positions"]
+position = Vector2( 347.298, 418.405 )
+
+[node name="Position2D5" type="Position2D" parent="Positions"]
+position = Vector2( 557.925, 352.452 )
+
+[node name="Position2D6" type="Position2D" parent="Positions"]
+position = Vector2( 658.46, 443.463 )
+
+[node name="Submit" type="Button" parent="."]
+margin_left = 393.984
+margin_top = 71.8376
+margin_right = 492.984
+margin_bottom = 119.838
+rect_scale = Vector2( 2, 2 )
+custom_fonts/font = SubResource( 2 )
+text = "Submit"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Timer" type="Timer" parent="."]
+wait_time = 2.0
+[connection signal="pressed" from="Submit" to="." method="_on_Submit_pressed"]
+[connection signal="timeout" from="Timer" to="." method="_on_Timer_timeout"]
