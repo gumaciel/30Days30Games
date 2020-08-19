@@ -1,0 +1,28 @@
+[gd_scene load_steps=4 format=2]
+
+[ext_resource path="res://assets/Timberman_BG.png" type="Texture" id=1]
+[ext_resource path="res://src/core/Game.gd" type="Script" id=2]
+[ext_resource path="res://src/actors/Player.tscn" type="PackedScene" id=3]
+
+[node name="Game" type="Node2D"]
+script = ExtResource( 2 )
+
+[node name="Timberman_BG" type="Sprite" parent="."]
+texture = ExtResource( 1 )
+centered = false
+
+[node name="Player" parent="." instance=ExtResource( 3 )]
+position = Vector2( 330.424, 1249.36 )
+
+[node name="PositionRootReference" type="Position2D" parent="."]
+position = Vector2( 454.863, 1330.54 )
+
+[node name="Tree" type="Node2D" parent="."]
+
+[node name="TouchScreenButton" type="TouchScreenButton" parent="."]
+
+[node name="Timer" type="Timer" parent="."]
+wait_time = 0.05
+one_shot = true
+[connection signal="position_changed" from="Player" to="." method="_on_Player_position_changed"]
+[connection signal="timeout" from="Timer" to="." method="_on_Timer_timeout"]
