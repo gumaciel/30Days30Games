@@ -1,0 +1,19 @@
+[remap]
+
+importer="wavefront_obj"
+type="Mesh"
+path="res://.import/grenadeSmoke.obj-7007e3dbfca7b5e748e0f9af72ccddcd.mesh"
+
+[deps]
+
+files=[ "res://.import/grenadeSmoke.obj-7007e3dbfca7b5e748e0f9af72ccddcd.mesh" ]
+
+source_file="res://assets/Models/grenadeSmoke.obj"
+dest_files=[ "res://.import/grenadeSmoke.obj-7007e3dbfca7b5e748e0f9af72ccddcd.mesh", "res://.import/grenadeSmoke.obj-7007e3dbfca7b5e748e0f9af72ccddcd.mesh" ]
+
+[params]
+
+generate_tangents=true
+scale_mesh=Vector3( 1, 1, 1 )
+offset_mesh=Vector3( 0, 0, 0 )
+optimize_mesh=true

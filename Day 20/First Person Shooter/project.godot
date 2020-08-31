@@ -15,21 +15,10 @@ _global_script_class_icons={
 
 [application]
 
-config/name="Timber Man"
-run/main_scene="res://src/core/Game.tscn"
+config/name="First Person Shooter"
+run/main_scene="res://src/world/World.tscn"
 config/icon="res://icon.png"
 
-[display]
+[rendering]
 
-window/size/width=900
-window/size/height=1600
-window/size/test_width=450
-window/size/test_height=800
-window/handheld/orientation="portrait"
-window/stretch/mode="viewport"
-window/stretch/aspect="keep"
-
-[layer_names]
-
-2d_physics/layer_1="tree"
-2d_physics/layer_2="player"
+environment/default_environment="res://default_env.tres"

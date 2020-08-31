@@ -1,0 +1,66 @@
+[gd_scene load_steps=8 format=2]
+
+[ext_resource path="res://assets/Models/pistol.obj" type="ArrayMesh" id=1]
+[ext_resource path="res://src/guns/Gun.gd" type="Script" id=2]
+[ext_resource path="res://assets/Models/ammo_pistol.obj" type="ArrayMesh" id=3]
+[ext_resource path="res://assets/png/crosshair-png-Transparent-Images.png" type="Texture" id=4]
+
+[sub_resource type="ParticlesMaterial" id=1]
+emission_shape = 2
+emission_box_extents = Vector3( 1, 1, 1 )
+gravity = Vector3( 0, 0, 0 )
+scale = 0.5
+
+[sub_resource type="SpatialMaterial" id=3]
+albedo_color = Color( 1, 0.258824, 0, 1 )
+
+[sub_resource type="SphereMesh" id=2]
+material = SubResource( 3 )
+
+[node name="Gun" type="Spatial"]
+transform = Transform( -10, 0, -3.25841e-06, 0, 10, 0, 3.25841e-06, 0, -10, 0, 0, 0 )
+script = ExtResource( 2 )
+
+[node name="Body" type="MeshInstance" parent="."]
+mesh = ExtResource( 1 )
+material/0 = null
+material/1 = null
+material/2 = null
+material/3 = null
+material/4 = null
+material/5 = null
+material/6 = null
+material/7 = null
+material/8 = null
+material/9 = null
+material/10 = null
+material/11 = null
+material/12 = null
+material/13 = null
+__meta__ = {
+"_editor_description_": "0"
+}
+
+[node name="TimerToShootAgain" type="Timer" parent="."]
+wait_time = 0.5
+
+[node name="ammo_pistol" type="MeshInstance" parent="."]
+transform = Transform( 1, 0, 5.30863e-14, 5.30863e-14, 1.62921e-07, -1, 0, 1, 1.62921e-07, -7.29181e-05, 0.0136438, 0.0252913 )
+mesh = ExtResource( 3 )
+material/0 = null
+material/1 = null
+material/2 = null
+material/3 = null
+
+[node name="Particles" type="Particles" parent="."]
+transform = Transform( 0.01, 0, 0, 0, 0.01, 0, 0, 0, 0.01, -1.16789e-08, 0.0129315, 0.0358424 )
+emitting = false
+amount = 50
+lifetime = 0.5
+process_material = SubResource( 1 )
+draw_pass_1 = SubResource( 2 )
+
+[node name="Sprite3D" type="Sprite3D" parent="."]
+transform = Transform( 0.01, 0, 0, 0, 0.01, 0, 0, 0, 0.01, -2.53869e-08, 0, 0.0779119 )
+texture = ExtResource( 4 )
+[connection signal="timeout" from="TimerToShootAgain" to="." method="_on_TimerToShootAgain_timeout"]
