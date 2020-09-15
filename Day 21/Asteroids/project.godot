@@ -1,0 +1,42 @@
+; Engine configuration file.
+; It's best edited using the editor UI and not directly,
+; since the parameters that go here are not all obvious.
+;
+; Format:
+;   [section] ; section goes between []
+;   param=value ; assign values to parameters
+
+config_version=4
+
+_global_script_classes=[ {
+"base": "Area2D",
+"class": "Bullet",
+"language": "GDScript",
+"path": "res://src/actors/Bullet.gd"
+}, {
+"base": "Area2D",
+"class": "Meteor",
+"language": "GDScript",
+"path": "res://src/enemies/Meteor.gd"
+} ]
+_global_script_class_icons={
+"Bullet": "",
+"Meteor": ""
+}
+
+[application]
+
+config/name="Asteroids"
+run/main_scene="res://src/core/Game.tscn"
+config/icon="res://icon.png"
+
+[layer_names]
+
+2d_physics/layer_1="WORLD"
+2d_physics/layer_2="METEOR"
+2d_physics/layer_3="PLAYER"
+2d_physics/layer_4="BULLET"
+
+[rendering]
+
+environment/default_environment="res://default_env.tres"
