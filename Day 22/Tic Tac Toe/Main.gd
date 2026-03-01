@@ -4,6 +4,10 @@ var current_player: String = "X"
 var board: Array[String] = ["", "", "", "", "", "", "", "", ""]
 var game_over: bool = false
 
+# Track moves for the non-stop variant
+var moves_x: Array[int] = []
+var moves_o: Array[int] = []
+
 @onready var status_label: Label = $StatusLabel
 @onready var grid_container: GridContainer = $GridContainer
 @onready var reset_button: Button = $ResetButton
@@ -12,7 +16,6 @@ var game_over: bool = false
 var color_x := Color(0.2, 0.6, 1.0) # Light blue
 var color_o := Color(1.0, 0.4, 0.4) # Light red
 var color_win := Color(0.4, 1.0, 0.4) # Light green
-var color_draw := Color(0.7, 0.7, 0.7) # Gray
 var color_default := Color(1.0, 1.0, 1.0) # White
 
 # Original positions for shake effect
@@ -65,13 +68,23 @@ func _on_button_pressed(index: int) -> void:
 	if game_over or board[index] != "":
 		return
 
+	# Check if we are making the 3rd move (which will remove the 1st after placement if no win)
+	var p_moves := moves_x if current_player == "X" else moves_o
+	var removing_index: int = -1
+
+	if p_moves.size() == 3:
+		removing_index = p_moves[0]
+
+	# Place piece
 	board[index] = current_player
+	p_moves.append(index)
 	var button: Button = grid_container.get_node("Button" + str(index)) as Button
 	button.text = current_player
 
 	# Pop animation for the placed piece
 	var pop_tween := create_tween()
 	button.scale = Vector2(0.5, 0.5)
+	button.modulate.a = 1.0 # Ensure fully visible
 	pop_tween.tween_property(button, "scale", Vector2(1.2, 1.2), 0.1).set_trans(Tween.TRANS_SPRING)
 	pop_tween.tween_property(button, "scale", Vector2(1.0, 1.0), 0.1).set_trans(Tween.TRANS_SINE)
 
@@ -102,46 +115,98 @@ func _on_button_pressed(index: int) -> void:
 	mini_burst.emitting = true
 	get_tree().create_timer(1.0).timeout.connect(mini_burst.queue_free)
 
-
+	# Check for win immediately after placing
 	var win_combo := check_win()
 	if win_combo.size() > 0:
-		status_label.text = "Player " + current_player + " wins!"
-		status_label.add_theme_color_override("font_color", color_win)
-		game_over = true
+		handle_win(win_combo, p_color)
+		return
 
-		# Massive screen shake
-		shake(20.0, 0.5)
+	# If no win and we had 3 moves before placing this one (meaning we now have 4),
+	# remove the oldest move
+	if p_moves.size() == 4:
+		var oldest_index: int = p_moves.pop_front()
+		board[oldest_index] = ""
+		var old_button: Button = grid_container.get_node("Button" + str(oldest_index)) as Button
 
-		# Explode particles in the center
-		win_particles.color = p_color
-		win_particles.emitting = true
+		# Animate shrinking and clearing
+		var clear_tween := create_tween()
+		clear_tween.tween_property(old_button, "scale", Vector2(0.0, 0.0), 0.2).set_trans(Tween.TRANS_BACK)
+		clear_tween.tween_callback(func():
+			old_button.text = ""
+			old_button.scale = Vector2(1.0, 1.0)
+			old_button.remove_theme_color_override("font_color")
+			old_button.modulate.a = 1.0
+		).set_delay(0.2)
 
-		highlight_win(win_combo)
-		disable_empty_buttons()
+		# Now check win again in case removing the piece caused the *other* player to win?
+		# (In Tic Tac Toe removing your own piece can't make the other player win, but just in case)
+		win_combo = check_win()
+		if win_combo.size() > 0:
+			# Get the winner (might be the other player if logic was weird, but it's not)
+			var winner: String = board[win_combo[0]]
+			var w_color := color_x if winner == "X" else color_o
+			handle_win(win_combo, w_color)
+			return
 
-		# Animate status label
-		var win_tween := create_tween()
-		active_tweens.append(win_tween)
-		win_tween.set_loops()
-		win_tween.tween_property(status_label, "scale", Vector2(1.2, 1.2), 0.5).set_trans(Tween.TRANS_SINE)
-		win_tween.tween_property(status_label, "scale", Vector2(1.0, 1.0), 0.5).set_trans(Tween.TRANS_SINE)
-
-	elif check_draw():
-		status_label.text = "It's a draw!"
-		status_label.add_theme_color_override("font_color", color_draw)
-		game_over = true
-		shake(10.0, 0.3)
+	# Switch turn
+	if current_player == "X":
+		current_player = "O"
 	else:
-		if current_player == "X":
-			current_player = "O"
-		else:
-			current_player = "X"
-		update_status()
+		current_player = "X"
+	update_status()
+
+func handle_win(win_combo: Array, p_color: Color) -> void:
+	var winner_name: String = board[win_combo[0]]
+	status_label.text = "Player " + winner_name + " wins!"
+	status_label.add_theme_color_override("font_color", color_win)
+	game_over = true
+
+	# Massive screen shake
+	shake(20.0, 0.5)
+
+	# Explode particles in the center
+	win_particles.color = p_color
+	win_particles.emitting = true
+
+	highlight_win(win_combo)
+	disable_empty_buttons()
+
+	# Animate status label
+	var win_tween := create_tween()
+	active_tweens.append(win_tween)
+	win_tween.set_loops()
+	win_tween.tween_property(status_label, "scale", Vector2(1.2, 1.2), 0.5).set_trans(Tween.TRANS_SINE)
+	win_tween.tween_property(status_label, "scale", Vector2(1.0, 1.0), 0.5).set_trans(Tween.TRANS_SINE)
 
 func update_status() -> void:
 	status_label.text = "Player " + current_player + "'s turn"
 	var current_color := color_x if current_player == "X" else color_o
 	status_label.add_theme_color_override("font_color", current_color)
+
+	# Stop all active tweens to clear previous blinking
+	for tween in active_tweens:
+		if tween and tween.is_valid():
+			tween.kill()
+	active_tweens.clear()
+
+	# Restore alpha for all buttons in case they were blinking
+	for i in range(9):
+		var btn: Button = grid_container.get_node("Button" + str(i)) as Button
+		if btn.text != "":
+			btn.modulate.a = 1.0
+
+	# Check if the current player has 3 pieces placed (meaning next play will remove the oldest)
+	var p_moves := moves_x if current_player == "X" else moves_o
+	if p_moves.size() == 3:
+		# Make the oldest piece blink
+		var oldest_index: int = p_moves[0]
+		var blink_btn: Button = grid_container.get_node("Button" + str(oldest_index)) as Button
+
+		var blink_tween := create_tween()
+		active_tweens.append(blink_tween)
+		blink_tween.set_loops()
+		blink_tween.tween_property(blink_btn, "modulate:a", 0.2, 0.4).set_trans(Tween.TRANS_SINE)
+		blink_tween.tween_property(blink_btn, "modulate:a", 1.0, 0.4).set_trans(Tween.TRANS_SINE)
 
 	# Little bounce when turn changes
 	var bounce := create_tween()
@@ -175,6 +240,7 @@ func highlight_win(combo: Array) -> void:
 	for i in combo:
 		var button: Button = grid_container.get_node("Button" + str(i)) as Button
 		button.add_theme_color_override("font_color", color_win)
+		button.modulate.a = 1.0 # Ensure it's not blinking
 		# Pulse the winning buttons
 		win_tween.tween_property(button, "scale", Vector2(1.15, 1.15), 0.5)
 
@@ -192,12 +258,6 @@ func disable_empty_buttons() -> void:
 			# Fade out empty buttons slightly
 			var fade := create_tween()
 			fade.tween_property(button, "modulate:a", 0.3, 0.5)
-
-func check_draw() -> bool:
-	for cell in board:
-		if cell == "":
-			return false
-	return true
 
 func shake(intensity: float, duration: float) -> void:
 	var shake_tween := create_tween()
@@ -222,6 +282,8 @@ func reset_game() -> void:
 
 	current_player = "X"
 	board = ["", "", "", "", "", "", "", "", ""]
+	moves_x.clear()
+	moves_o.clear()
 	game_over = false
 
 	# Stop all particles
