@@ -1,6 +1,8 @@
-[gd_scene load_steps=3 format=3 uid="uid://clickergame1234"]
+[gd_scene load_steps=5 format=3 uid="uid://clickergame1234"]
 
 [ext_resource type="Script" path="res://Main.gd" id="1_clicker2"]
+[ext_resource type="Script" path="res://GameData.gd" id="2_gamedata"]
+[ext_resource type="Script" path="res://UpgradeManager.gd" id="3_upgrademanager"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_1"]
 bg_color = Color(0.1, 0.1, 0.1, 0.9)
@@ -13,6 +15,12 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_clicker2")
+
+[node name="GameData" type="Node" parent="."]
+script = ExtResource("2_gamedata")
+
+[node name="UpgradeManager" type="Node" parent="."]
+script = ExtResource("3_upgrademanager")
 
 [node name="Background" type="ColorRect" parent="."]
 layout_mode = 1

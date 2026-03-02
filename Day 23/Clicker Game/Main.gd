@@ -1,18 +1,7 @@
 extends Control
 
-var cookies: float = 0.0
-var cookies_per_second: float = 0.0
-var time_played: float = 0.0
-var game_won: bool = false
-var win_cost: float = 1_000_000.0
-
-var upgrades = [
-	{"name": "Cursor", "base_cost": 15, "cost": 15, "cps": 0.1, "count": 0, "multiplier": 1.15},
-	{"name": "Grandma", "base_cost": 100, "cost": 100, "cps": 1.0, "count": 0, "multiplier": 1.15},
-	{"name": "Farm", "base_cost": 1100, "cost": 1100, "cps": 8.0, "count": 0, "multiplier": 1.15},
-	{"name": "Mine", "base_cost": 12000, "cost": 12000, "cps": 47.0, "count": 0, "multiplier": 1.15},
-	{"name": "Factory", "base_cost": 130000, "cost": 130000, "cps": 260.0, "count": 0, "multiplier": 1.15}
-]
+@onready var game_data: Node = $GameData
+@onready var upgrade_manager: Node = $UpgradeManager
 
 @onready var score_label: Label = $HBox/LeftPanel/ScoreLabel
 @onready var cps_label: Label = $HBox/LeftPanel/CPSLabel
@@ -22,89 +11,87 @@ var upgrades = [
 @onready var time_label: Label = $WinScreen/VBox/TimeLabel
 @onready var restart_button: Button = $WinScreen/VBox/RestartButton
 
-var upgrade_buttons = []
+var upgrade_buttons: Array[Button] = []
 
 func _ready() -> void:
+	_connect_signals()
+	_setup_upgrades_ui()
+	_update_labels()
+	_update_upgrade_buttons()
+
+func _connect_signals() -> void:
 	click_button.pressed.connect(_on_click_button_pressed)
 	restart_button.pressed.connect(_on_restart_button_pressed)
-	_setup_upgrades()
-	update_ui()
 
-func _setup_upgrades() -> void:
+	game_data.cookies_changed.connect(_on_cookies_changed)
+	game_data.cps_changed.connect(_on_cps_changed)
+	game_data.game_won.connect(_on_game_won)
+
+	upgrade_manager.upgrade_purchased.connect(_on_upgrade_purchased)
+
+func _setup_upgrades_ui() -> void:
+	var upgrades: Array[Upgrade] = upgrade_manager.get_upgrades()
 	for i in range(upgrades.size()):
-		var btn = Button.new()
+		var btn: Button = Button.new()
 		btn.custom_minimum_size = Vector2(0, 60)
-		btn.pressed.connect(func(): _on_upgrade_pressed(i))
+		btn.pressed.connect(_on_upgrade_pressed.bind(i))
 		upgrades_list.add_child(btn)
 		upgrade_buttons.append(btn)
 
-	var win_btn = Button.new()
+	var win_btn: Button = Button.new()
 	win_btn.custom_minimum_size = Vector2(0, 80)
-	win_btn.theme_override_colors_font_color = Color(1, 0.8, 0, 1)
+	win_btn.add_theme_color_override("font_color", Color(1, 0.8, 0, 1))
 	win_btn.pressed.connect(_on_win_pressed)
 	upgrades_list.add_child(win_btn)
 	upgrade_buttons.append(win_btn)
 
-func _process(delta: float) -> void:
-	if game_won:
-		return
+func _process(_delta: float) -> void:
+	pass
 
-	time_played += delta
-	if cookies_per_second > 0:
-		cookies += cookies_per_second * delta
-		update_ui()
-
-	_update_upgrade_buttons()
-
-func update_ui() -> void:
-	score_label.text = "Cookies: " + str(floor(cookies))
-	cps_label.text = "per second: " + str(snapped(cookies_per_second, 0.1))
+func _update_labels() -> void:
+	score_label.text = "Cookies: " + str(floor(game_data.cookies))
+	cps_label.text = "per second: " + str(snapped(game_data.cookies_per_second, 0.1))
 
 func _update_upgrade_buttons() -> void:
+	var upgrades: Array[Upgrade] = upgrade_manager.get_upgrades()
 	for i in range(upgrades.size()):
-		var upg = upgrades[i]
-		var btn = upgrade_buttons[i]
-		btn.text = upg["name"] + " (" + str(upg["count"]) + ")\nCost: " + str(floor(upg["cost"])) + " | CPS: +" + str(upg["cps"])
-		btn.disabled = cookies < upg["cost"]
+		var upg: Upgrade = upgrades[i]
+		var btn: Button = upgrade_buttons[i]
+		btn.text = upg.get_display_text()
+		btn.disabled = game_data.cookies < upg.get_current_cost()
 
-	var win_btn = upgrade_buttons[upgrades.size()]
+	var win_btn: Button = upgrade_buttons[upgrades.size()]
 	win_btn.text = "WIN GAME\nCost: 1,000,000"
-	win_btn.disabled = cookies < win_cost
+	win_btn.disabled = game_data.cookies < game_data.win_cost
 
 func _on_click_button_pressed() -> void:
-	if game_won: return
-	cookies += 1.0
-	update_ui()
-	_update_upgrade_buttons()
+	game_data.click()
 
 func _on_upgrade_pressed(index: int) -> void:
-	if game_won: return
-	var upg = upgrades[index]
-	if cookies >= upg["cost"]:
-		cookies -= upg["cost"]
-		cookies_per_second += upg["cps"]
-		upg["count"] += 1
-		upg["cost"] = upg["base_cost"] * pow(upg["multiplier"], upg["count"])
-		update_ui()
-		_update_upgrade_buttons()
+	if not game_data.is_game_won:
+		upgrade_manager.attempt_purchase(index, game_data)
 
 func _on_win_pressed() -> void:
-	if cookies >= win_cost and not game_won:
-		cookies -= win_cost
-		game_won = true
-		win_screen.visible = true
-		time_label.text = "Time taken: " + str(snapped(time_played, 0.1)) + " seconds"
+	game_data.attempt_win()
 
 func _on_restart_button_pressed() -> void:
-	cookies = 0.0
-	cookies_per_second = 0.0
-	time_played = 0.0
-	game_won = false
+	game_data.reset()
+	upgrade_manager.reset_all()
 	win_screen.visible = false
+	_update_labels()
+	_update_upgrade_buttons()
 
-	for upg in upgrades:
-		upg["count"] = 0
-		upg["cost"] = upg["base_cost"]
+func _on_cookies_changed(_new_amount: float) -> void:
+	_update_labels()
+	_update_upgrade_buttons()
 
-	update_ui()
+func _on_cps_changed(_new_cps: float) -> void:
+	_update_labels()
+	_update_upgrade_buttons()
+
+func _on_game_won(time_taken: float) -> void:
+	win_screen.visible = true
+	time_label.text = "Time taken: " + str(snapped(time_taken, 0.1)) + " seconds"
+
+func _on_upgrade_purchased(_index: int, _new_cps: float) -> void:
 	_update_upgrade_buttons()
