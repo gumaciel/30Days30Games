@@ -10,7 +10,8 @@ config_version=5
 
 [application]
 
-config/name="New Game"
+config/name="Clicker Game"
+run/main_scene="res://Main.tscn"
 config/features=PackedStringArray("4.6", "Forward Plus")
 
 [rendering]
