@@ -9,11 +9,13 @@ func _ready() -> void:
 
 func _initialize_upgrades() -> void:
 	upgrades.clear()
-	upgrades.append(Upgrade.new("Cursor", 15.0, 0.1))
-	upgrades.append(Upgrade.new("Grandma", 100.0, 1.0))
-	upgrades.append(Upgrade.new("Farm", 1100.0, 8.0))
-	upgrades.append(Upgrade.new("Mine", 12000.0, 47.0))
-	upgrades.append(Upgrade.new("Factory", 130000.0, 260.0))
+	upgrades.append(Upgrade.new("Cursor", "🖱️", "Auto-clicks for you", 15.0, 0.1))
+	upgrades.append(Upgrade.new("Grandma", "👵", "Bakes cookies with love", 100.0, 1.0))
+	upgrades.append(Upgrade.new("Farm", "🌾", "Grows cookie plants", 1100.0, 8.0))
+	upgrades.append(Upgrade.new("Mine", "⛏️", "Mines cookie dough", 12000.0, 47.0))
+	upgrades.append(Upgrade.new("Factory", "🏭", "Mass produces cookies", 130000.0, 260.0))
+	upgrades.append(Upgrade.new("Bank", "🏦", "Generates cookie interest", 1400000.0, 1400.0))
+	upgrades.append(Upgrade.new("Temple", "🛕", "Prays for cookies", 20000000.0, 7800.0))
 
 func get_upgrades() -> Array[Upgrade]:
 	return upgrades
