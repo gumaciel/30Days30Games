@@ -1,0 +1,248 @@
+[gd_scene load_steps=8 format=3 uid="uid://clickergame1234"]
+
+[ext_resource type="Script" path="res://Main.gd" id="1_clicker2"]
+[ext_resource type="Script" path="res://GameData.gd" id="2_gamedata"]
+[ext_resource type="Script" path="res://UpgradeManager.gd" id="3_upgrademanager"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_1"]
+bg_color = Color(0.06, 0.06, 0.1, 0.95)
+border_color = Color(0.15, 0.15, 0.25, 0.5)
+border_width_left = 2
+set_corner_radius_all = 0
+content_margin_left = 0.0
+content_margin_top = 0.0
+content_margin_right = 0.0
+content_margin_bottom = 0.0
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_cookie"]
+bg_color = Color(0, 0, 0, 0)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_win_btn"]
+bg_color = Color(0.15, 0.12, 0.05, 0.9)
+border_color = Color(1.0, 0.84, 0.0, 0.6)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+corner_radius_top_left = 12
+corner_radius_top_right = 12
+corner_radius_bottom_right = 12
+corner_radius_bottom_left = 12
+content_margin_left = 20.0
+content_margin_top = 15.0
+content_margin_right = 20.0
+content_margin_bottom = 15.0
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_win_hover"]
+bg_color = Color(0.2, 0.17, 0.05, 0.95)
+border_color = Color(1.0, 0.9, 0.3, 0.8)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+corner_radius_top_left = 12
+corner_radius_top_right = 12
+corner_radius_bottom_right = 12
+corner_radius_bottom_left = 12
+content_margin_left = 20.0
+content_margin_top = 15.0
+content_margin_right = 20.0
+content_margin_bottom = 15.0
+
+[node name="Main" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_clicker2")
+
+[node name="GameData" type="Node" parent="."]
+script = ExtResource("2_gamedata")
+
+[node name="UpgradeManager" type="Node" parent="."]
+script = ExtResource("3_upgrademanager")
+
+[node name="Background" type="ColorRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+color = Color(0.05, 0.05, 0.08, 1)
+
+[node name="HBox" type="HBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="LeftPanel" type="VBoxContainer" parent="HBox"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 1.5
+theme_override_constants/separation = 0
+
+[node name="ScoreArea" type="VBoxContainer" parent="HBox/LeftPanel"]
+layout_mode = 2
+size_flags_vertical = 0
+theme_override_constants/separation = 4
+alignment = 1
+
+[node name="TopSpacer" type="Control" parent="HBox/LeftPanel/ScoreArea"]
+custom_minimum_size = Vector2(0, 30)
+layout_mode = 2
+
+[node name="ScoreLabel" type="Label" parent="HBox/LeftPanel/ScoreArea"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.95, 0.85, 0.65, 1)
+theme_override_font_sizes/font_size = 52
+text = "0 cookies"
+horizontal_alignment = 1
+
+[node name="CPSLabel" type="Label" parent="HBox/LeftPanel/ScoreArea"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.55, 0.55, 0.65, 1)
+theme_override_font_sizes/font_size = 20
+text = "per second: 0"
+horizontal_alignment = 1
+
+[node name="ClickPowerLabel" type="Label" parent="HBox/LeftPanel/ScoreArea"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.45, 0.45, 0.55, 1)
+theme_override_font_sizes/font_size = 16
+text = "click power: 1"
+horizontal_alignment = 1
+
+[node name="CookieArea" type="CenterContainer" parent="HBox/LeftPanel"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="ClickButton" type="Button" parent="HBox/LeftPanel/CookieArea"]
+custom_minimum_size = Vector2(280, 280)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+theme_override_font_sizes/font_size = 48
+theme_override_styles/normal = SubResource("StyleBoxFlat_cookie")
+theme_override_styles/hover = SubResource("StyleBoxFlat_cookie")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_cookie")
+theme_override_styles/focus = SubResource("StyleBoxFlat_cookie")
+flat = true
+
+[node name="RightPanel" type="PanelContainer" parent="HBox"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_styles/panel = SubResource("StyleBoxFlat_1")
+
+[node name="Margin" type="MarginContainer" parent="HBox/RightPanel"]
+layout_mode = 2
+theme_override_constants/margin_left = 16
+theme_override_constants/margin_top = 16
+theme_override_constants/margin_right = 16
+theme_override_constants/margin_bottom = 16
+
+[node name="VBox" type="VBoxContainer" parent="HBox/RightPanel/Margin"]
+layout_mode = 2
+theme_override_constants/separation = 12
+
+[node name="Title" type="Label" parent="HBox/RightPanel/Margin/VBox"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.8, 0.75, 0.65, 1)
+theme_override_font_sizes/font_size = 28
+text = "🛒 Upgrades"
+horizontal_alignment = 1
+
+[node name="HSeparator" type="HSeparator" parent="HBox/RightPanel/Margin/VBox"]
+layout_mode = 2
+theme_override_colors/separator = Color(0.2, 0.2, 0.3, 0.5)
+
+[node name="Scroll" type="ScrollContainer" parent="HBox/RightPanel/Margin/VBox"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="UpgradesList" type="VBoxContainer" parent="HBox/RightPanel/Margin/VBox/Scroll"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/separation = 8
+
+[node name="GoldenCookieLayer" type="Control" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+mouse_filter = 2
+
+[node name="MilestoneLabel" type="Label" parent="."]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -250.0
+offset_top = 80.0
+offset_right = 250.0
+offset_bottom = 130.0
+theme_override_colors/font_color = Color(1, 0.84, 0, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 4
+theme_override_font_sizes/font_size = 28
+text = "Milestone!"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="WinScreen" type="ColorRect" parent="."]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+color = Color(0, 0, 0, 0.85)
+
+[node name="CenterVBox" type="VBoxContainer" parent="WinScreen"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -250.0
+offset_top = -180.0
+offset_right = 250.0
+offset_bottom = 180.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 20
+alignment = 1
+
+[node name="WinLabel" type="Label" parent="WinScreen/CenterVBox"]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 0.84, 0, 1)
+theme_override_font_sizes/font_size = 56
+text = "🏆 YOU WIN!"
+horizontal_alignment = 1
+
+[node name="TimeLabel" type="Label" parent="WinScreen/CenterVBox"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.8, 0.8, 0.9, 1)
+theme_override_font_sizes/font_size = 22
+text = "Time: 0m 0s"
+horizontal_alignment = 1
+
+[node name="StatsLabel" type="Label" parent="WinScreen/CenterVBox"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.6, 0.6, 0.7, 1)
+theme_override_font_sizes/font_size = 18
+text = "Stats"
+horizontal_alignment = 1
+
+[node name="RestartButton" type="Button" parent="WinScreen/CenterVBox"]
+custom_minimum_size = Vector2(220, 60)
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_colors/font_color = Color(1, 0.84, 0, 1)
+theme_override_font_sizes/font_size = 22
+theme_override_styles/normal = SubResource("StyleBoxFlat_win_btn")
+theme_override_styles/hover = SubResource("StyleBoxFlat_win_hover")
+text = "🔄 Play Again"
