@@ -16,9 +16,25 @@ compatibility/default_parent_skeleton_in_mesh_instance_3d=true
 
 config/name="Tic Tac Toe"
 run/main_scene="res://Main.tscn"
-config/features=PackedStringArray("4.6", "Forward Plus")
+config/features=PackedStringArray("4.7", "Forward Plus")
+
+[dotnet]
+
+project/assembly_name="Tic Tac Toe"
 
 [rendering]
 
 textures/vram_compression/import_etc2_astc=true
 environment/defaults/default_clear_color=Color(0.141176, 0.141176, 0.141176, 1)
+
+[display]
+
+window/vsync/vsync_mode=0
+
+window/size/viewport_width=720
+window/size/viewport_height=1280
+window/size/window_width_override=450
+window/size/window_height_override=800
+window/stretch/mode="canvas_items"
+window/stretch/aspect="expand"
+window/handheld/orientation=1

@@ -61,7 +61,7 @@ func place_piece(index: int) -> Dictionary:
 
 func get_oldest_move_index() -> int:
 	var p_moves := _current_moves()
-	if p_moves.size() >= 2:
+	if p_moves.size() >= 3:
 		return p_moves[0]
 	return -1
 

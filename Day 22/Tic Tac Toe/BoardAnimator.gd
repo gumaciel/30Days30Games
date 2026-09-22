@@ -1,3 +1,25 @@
+# MIT License
+#
+# Copyright (c) 2023-present Poing Studios
+#
+# Permission is hereby granted, free of charge, to any person obtaining a copy
+# of this software and associated documentation files (the "Software"), to deal
+# in the Software without restriction, including without limitation the rights
+# to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+# copies of the Software, and to permit persons to whom the Software is
+# furnished to do so, subject to the following conditions:
+#
+# The above copyright notice and this permission notice shall be included in all
+# copies or substantial portions of the Software.
+#
+# THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+# IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+# FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+# AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+# LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+# OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+# SOFTWARE.
+
 extends RefCounted
 
 var _grid: GridContainer
@@ -5,10 +27,10 @@ var _status_label: Label
 var _score_label: Label
 var _reset_button: Button
 var _owner_node: Node
-var _original_grid_pos: Vector2
 var _win_particles: CPUParticles2D
 var _active_tweens: Array[Tween] = []
 
+const BASE_GRID_HALF_SIZE := 154.0
 const COLOR_X := Color(0.2, 0.6, 1.0)
 const COLOR_O := Color(1.0, 0.4, 0.4)
 const COLOR_WIN := Color(0.4, 1.0, 0.4)
@@ -24,7 +46,6 @@ func init(owner: Node, grid: GridContainer, label: Label, score_lbl: Label, rese
 	_status_label = label
 	_score_label = score_lbl
 	_reset_button = reset_btn
-	_original_grid_pos = grid.position
 
 	_score_label.add_theme_font_size_override("font_size", 22)
 	_score_label.add_theme_color_override("font_color", Color(0.7, 0.7, 0.7))
@@ -41,7 +62,6 @@ func init(owner: Node, grid: GridContainer, label: Label, score_lbl: Label, rese
 	_win_particles.scale_amount_min = 5.0
 	_win_particles.scale_amount_max = 15.0
 	_win_particles.lifetime = 1.5
-	_win_particles.position = owner.size / 2
 	owner.add_child(_win_particles)
 
 
@@ -55,6 +75,7 @@ func animate_place(button: Button, player: String) -> void:
 	button.add_theme_color_override("font_color", p_color)
 	button.modulate.a = 1.0
 
+	button.pivot_offset = button.size / 2
 	var pop_tween := _create_tween()
 	button.scale = Vector2(0.5, 0.5)
 	pop_tween.tween_property(button, "scale", Vector2(1.2, 1.2), 0.1).set_trans(Tween.TRANS_SPRING)
@@ -72,6 +93,7 @@ func clear_button_instant(button: Button) -> void:
 
 
 func animate_remove(button: Button) -> void:
+	button.pivot_offset = button.size / 2
 	var clear_tween := _create_tween()
 	clear_tween.tween_property(button, "scale", Vector2(0.0, 0.0), 0.2).set_trans(Tween.TRANS_BACK)
 	clear_tween.tween_callback(func():
@@ -92,18 +114,21 @@ func animate_win(combo: Array, player: String) -> void:
 	_status_label.text = "Player " + player + " wins!"
 	_status_label.add_theme_color_override("font_color", COLOR_WIN)
 
-	_shake(20.0, 0.5)
+	_shake(15.0, 0.4)
 
+	_win_particles.position = _grid.position + _grid.size / 2
 	_win_particles.color = p_color
+	_win_particles.restart()
 	_win_particles.emitting = true
 
 	_highlight_win(combo)
 	_disable_empty_buttons()
 
+	_status_label.pivot_offset = _status_label.size / 2
 	var label_tween := _create_tween()
 	_active_tweens.append(label_tween)
 	label_tween.set_loops()
-	label_tween.tween_property(_status_label, "scale", Vector2(1.2, 1.2), 0.5).set_trans(Tween.TRANS_SINE)
+	label_tween.tween_property(_status_label, "scale", Vector2(1.15, 1.15), 0.5).set_trans(Tween.TRANS_SINE)
 	label_tween.tween_property(_status_label, "scale", Vector2(1.0, 1.0), 0.5).set_trans(Tween.TRANS_SINE)
 
 
@@ -111,7 +136,8 @@ func update_score(score_x: int, score_o: int) -> void:
 	_score_label.text = "X: " + str(score_x) + "  |  O: " + str(score_o)
 	_score_label.pivot_offset = _score_label.size / 2
 	var pop := _create_tween()
-	pop.tween_property(_score_label, "scale", Vector2(1.3, 1.3), 0.15).set_trans(Tween.TRANS_BACK)
+	_active_tweens.append(pop)
+	pop.tween_property(_score_label, "scale", Vector2(1.2, 1.2), 0.1).set_trans(Tween.TRANS_BACK)
 	pop.tween_property(_score_label, "scale", Vector2(1.0, 1.0), 0.15).set_trans(Tween.TRANS_SINE)
 
 
@@ -131,21 +157,26 @@ func animate_turn_change(player: String, oldest_blink_index: int) -> void:
 	if oldest_blink_index >= 0:
 		_animate_blink(get_button(oldest_blink_index))
 
+	_status_label.pivot_offset = _status_label.size / 2
 	var bounce := _create_tween()
-	_status_label.position.y -= 10
-	bounce.tween_property(_status_label, "position:y", _status_label.position.y + 10, 0.3) \
-		.set_trans(Tween.TRANS_BOUNCE).set_ease(Tween.EASE_OUT)
+	_active_tweens.append(bounce)
+	_status_label.scale = Vector2(1.15, 1.15)
+	bounce.tween_property(_status_label, "scale", Vector2(1.0, 1.0), 0.25) \
+		.set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)
 
 
 func animate_reset() -> void:
 	_kill_active_tweens()
 
+	_reset_button.pivot_offset = _reset_button.size / 2
+	_reset_button.rotation = 0.0
 	var spin := _create_tween()
-	spin.tween_property(_reset_button, "rotation", deg_to_rad(360), 0.5).as_relative()
+	spin.tween_property(_reset_button, "rotation", deg_to_rad(360), 0.4) \
+		.set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_OUT)
 
 	_win_particles.emitting = false
-	_create_tween().tween_property(_status_label, "scale", Vector2(1.0, 1.0), 0.1)
-	_status_label.scale = Vector2(1, 1)
+	_status_label.scale = Vector2(1.0, 1.0)
+	_score_label.scale = Vector2(1.0, 1.0)
 
 	for i in range(9):
 		var button := get_button(i)
@@ -183,6 +214,7 @@ func _highlight_win(combo: Array) -> void:
 
 	for i: int in combo:
 		var button := get_button(i)
+		button.pivot_offset = button.size / 2
 		button.add_theme_color_override("font_color", COLOR_WIN)
 		button.modulate.a = 1.0
 		win_tween.tween_property(button, "scale", Vector2(1.15, 1.15), 0.5)
@@ -204,13 +236,20 @@ func _disable_empty_buttons() -> void:
 
 func _shake(intensity: float, duration: float) -> void:
 	var shake_tween := _create_tween()
+	_active_tweens.append(shake_tween)
 	var steps := int(duration / 0.05)
 
 	for i in range(steps):
 		var offset := Vector2(randf_range(-intensity, intensity), randf_range(-intensity, intensity))
-		shake_tween.tween_property(_grid, "position", _original_grid_pos + offset, 0.05)
+		shake_tween.tween_property(_grid, "offset_left", -BASE_GRID_HALF_SIZE + offset.x, 0.05)
+		shake_tween.parallel().tween_property(_grid, "offset_right", BASE_GRID_HALF_SIZE + offset.x, 0.05)
+		shake_tween.parallel().tween_property(_grid, "offset_top", -BASE_GRID_HALF_SIZE + offset.y, 0.05)
+		shake_tween.parallel().tween_property(_grid, "offset_bottom", BASE_GRID_HALF_SIZE + offset.y, 0.05)
 
-	shake_tween.tween_property(_grid, "position", _original_grid_pos, 0.05)
+	shake_tween.tween_property(_grid, "offset_left", -BASE_GRID_HALF_SIZE, 0.05)
+	shake_tween.parallel().tween_property(_grid, "offset_right", BASE_GRID_HALF_SIZE, 0.05)
+	shake_tween.parallel().tween_property(_grid, "offset_top", -BASE_GRID_HALF_SIZE, 0.05)
+	shake_tween.parallel().tween_property(_grid, "offset_bottom", BASE_GRID_HALF_SIZE, 0.05)
 
 
 func _spawn_mini_burst(button: Button, p_color: Color) -> void:
@@ -238,6 +277,12 @@ func _kill_active_tweens() -> void:
 		if tween and tween.is_valid():
 			tween.kill()
 	_active_tweens.clear()
+	_status_label.scale = Vector2(1.0, 1.0)
+	_score_label.scale = Vector2(1.0, 1.0)
+	_grid.offset_left = -BASE_GRID_HALF_SIZE
+	_grid.offset_right = BASE_GRID_HALF_SIZE
+	_grid.offset_top = -BASE_GRID_HALF_SIZE
+	_grid.offset_bottom = BASE_GRID_HALF_SIZE
 
 
 func _create_tween() -> Tween:
