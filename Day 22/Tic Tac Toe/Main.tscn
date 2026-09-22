@@ -1,6 +1,7 @@
-[gd_scene load_steps=2 format=3 uid="uid://c6f2a24683050"]
+[gd_scene load_steps=3 format=3 uid="uid://c6f2a24683050"]
 
 [ext_resource type="Script" path="res://Main.gd" id="1_d0t0w"]
+[ext_resource type="Script" path="res://SafeArea.gd" id="2_safe"]
 
 [node name="Main" type="Control"]
 layout_mode = 3
@@ -11,7 +12,21 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_d0t0w")
 
-[node name="StatusLabel" type="Label" parent="."]
+[node name="SafeArea" type="MarginContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("2_safe")
+
+[node name="UI" type="Control" parent="SafeArea"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="StatusLabel" type="Label" parent="SafeArea/UI"]
 layout_mode = 1
 anchors_preset = 10
 anchor_right = 1.0
@@ -22,7 +37,7 @@ text = "Tic Tac Toe"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="ScoreLabel" type="Label" parent="."]
+[node name="ScoreLabel" type="Label" parent="SafeArea/UI"]
 layout_mode = 1
 anchors_preset = 10
 anchor_right = 1.0
@@ -33,76 +48,76 @@ text = "X: 0  |  O: 0"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="GridContainer" type="GridContainer" parent="."]
+[node name="GridContainer" type="GridContainer" parent="SafeArea/UI"]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -150.0
-offset_top = -150.0
-offset_right = 150.0
-offset_bottom = 150.0
+offset_left = -154.0
+offset_top = -154.0
+offset_right = 154.0
+offset_bottom = 154.0
 grow_horizontal = 2
 grow_vertical = 2
 columns = 3
 
-[node name="Button0" type="Button" parent="GridContainer"]
+[node name="Button0" type="Button" parent="SafeArea/UI/GridContainer"]
 custom_minimum_size = Vector2(100, 100)
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 
-[node name="Button1" type="Button" parent="GridContainer"]
+[node name="Button1" type="Button" parent="SafeArea/UI/GridContainer"]
 custom_minimum_size = Vector2(100, 100)
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 
-[node name="Button2" type="Button" parent="GridContainer"]
+[node name="Button2" type="Button" parent="SafeArea/UI/GridContainer"]
 custom_minimum_size = Vector2(100, 100)
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 
-[node name="Button3" type="Button" parent="GridContainer"]
+[node name="Button3" type="Button" parent="SafeArea/UI/GridContainer"]
 custom_minimum_size = Vector2(100, 100)
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 
-[node name="Button4" type="Button" parent="GridContainer"]
+[node name="Button4" type="Button" parent="SafeArea/UI/GridContainer"]
 custom_minimum_size = Vector2(100, 100)
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 
-[node name="Button5" type="Button" parent="GridContainer"]
+[node name="Button5" type="Button" parent="SafeArea/UI/GridContainer"]
 custom_minimum_size = Vector2(100, 100)
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 
-[node name="Button6" type="Button" parent="GridContainer"]
+[node name="Button6" type="Button" parent="SafeArea/UI/GridContainer"]
 custom_minimum_size = Vector2(100, 100)
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 
-[node name="Button7" type="Button" parent="GridContainer"]
+[node name="Button7" type="Button" parent="SafeArea/UI/GridContainer"]
 custom_minimum_size = Vector2(100, 100)
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 
-[node name="Button8" type="Button" parent="GridContainer"]
+[node name="Button8" type="Button" parent="SafeArea/UI/GridContainer"]
 custom_minimum_size = Vector2(100, 100)
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 
-[node name="ResetButton" type="Button" parent="."]
+[node name="ResetButton" type="Button" parent="SafeArea/UI"]
 layout_mode = 1
 anchors_preset = 7
 anchor_left = 0.5

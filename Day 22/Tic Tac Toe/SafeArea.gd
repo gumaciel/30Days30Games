@@ -1,0 +1,69 @@
+# MIT License
+#
+# Copyright (c) 2023-present Poing Studios
+#
+# Permission is hereby granted, free of charge, to any person obtaining a copy
+# of this software and associated documentation files (the "Software"), to deal
+# in the Software without restriction, including without limitation the rights
+# to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+# copies of the Software, and to permit persons to whom the Software is
+# furnished to do so, subject to the following conditions:
+#
+# The above copyright notice and this permission notice shall be included in all
+# copies or substantial portions of the Software.
+#
+# THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+# IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+# FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+# AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+# LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+# OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+# SOFTWARE.
+
+extends MarginContainer
+
+
+func _ready() -> void:
+	_update_safe_area()
+	get_viewport().size_changed.connect(_update_safe_area)
+
+
+func _update_safe_area() -> void:
+	var platform := OS.get_name()
+	var is_mobile := platform == "iOS" or platform == "Android"
+
+	var safe_area := DisplayServer.get_display_safe_area()
+	var window_size := DisplayServer.window_get_size()
+
+	if window_size.x == 0 or window_size.y == 0:
+		return
+
+	var viewport_size := Vector2(get_viewport().get_visible_rect().size)
+	var scale_factor := viewport_size.y / float(window_size.y)
+	if is_nan(scale_factor) or is_inf(scale_factor) or scale_factor <= 0.0:
+		scale_factor = 1.0
+
+	var safe_top := 0.0
+	var safe_left := 0.0
+	var safe_bottom := 0.0
+	var safe_right := 0.0
+
+	if is_mobile:
+		safe_top = float(safe_area.position.y)
+		safe_left = float(safe_area.position.x)
+		safe_bottom = float(window_size.y - (safe_area.position.y + safe_area.size.y))
+		safe_right = float(window_size.x - (safe_area.position.x + safe_area.size.x))
+
+	_apply_margins(
+		max(0.0, safe_top * scale_factor),
+		max(0.0, safe_left * scale_factor),
+		max(0.0, safe_bottom * scale_factor),
+		max(0.0, safe_right * scale_factor)
+	)
+
+
+func _apply_margins(top: float, left: float, bottom: float, right: float) -> void:
+	add_theme_constant_override("margin_top", int(top))
+	add_theme_constant_override("margin_left", int(left))
+	add_theme_constant_override("margin_bottom", int(bottom))
+	add_theme_constant_override("margin_right", int(right))
